@@ -1,52 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <style>
-    main {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    video {
-      height: 60vh;
-    }
-
-    .microphone:hover {
-      opacity: 0.8;
-      cursor: pointer;
-    }
-
-  </style>
-</head>
-<body>
-  <main>
-    <video src="videos/bunny-idle.mp4" muted autoplay loop></video>
-    <img class="microphone" src="microphone.svg" alt="">    
-
-
-
-  </main>
-
-  <script>
-
-    const microphone = document.querySelector('.microphone');
-    microphone.addEventListener('click', () => {
-      const recognition = new webkitSpeechRecognition();
-      recognition.lang = 'en-US';
-      recognition.start();
-      recognition.onresult = (event) => {
-        const speechToText = event.results[0][0].transcript;
-        console.log(speechToText);
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      main {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
       }
-    });
-  </script>
-  
-</body>
+
+      video {
+        height: 60vh;
+      }
+
+      .microphone:hover {
+        opacity: 0.8;
+        cursor: pointer;
+      }
+
+      .hide {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <video id="bunny-idle" src="videos/bunny-idle.mp4" muted autoplay loop></video>
+      <video id="bunny-curious" class="hide" src="videos/bunny-curious.mp4" muted autoplay loop></video>
+      <video id="bunny-happy" class="hide" src="videos/bunny-happy.mp4" muted autoplay loop></video>
+      <video id="bunny-no" class="hide" src="videos/bunny-no.mp4" muted autoplay loop></video>
+      <img class="microphone" class="hide" src="microphone.svg" alt="" />
+      <div class="speech"></div>
+    </main>
+
+    <script>
+      const microphone = document.querySelector(".microphone");
+      microphone.addEventListener("click", () => {
+        document.querySelector(".speech").textContent = "";
+        const recognition = new webkitSpeechRecognition();
+        recognition.lang = "en-US";
+        recognition.start();
+        recognition.onresult = (event) => {
+          const speechToText = event.results[0][0].transcript;
+          console.log(speechToText);
+          document.querySelector(".speech").textContent = speechToText;
+          chatToBunny(speechToText);
+        };
+      });
+
+      function chatToBunny(text) {
+        const res = fetch("/.netlify/functions/chat", {
+          method: "POST",
+          body: JSON.stringify({ text }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            const reaction = data.reaction;
+            const responseText = data.text;
+            document.querySelector(".speech").textContent = responseText;
+            // Use speech to speak the response
+            const speech = new SpeechSynthesisUtterance(responseText);
+            speech.lang = "en-US";
+            speechSynthesis.speak(speech);
+
+            // const videoFilename = `videos/bunny-${reaction}.mp4`;
+            // document.querySelector('video').src = videoFilename;
+            Array.from(document.querySelectorAll("video")).forEach((video) => {
+              video.classList.add("hide");
+            });
+            const reactionVideo = document.querySelector(`#bunny-${reaction}`);
+
+            reactionVideo.classList.remove("hide");
+            // Play video from beginning
+            reactionVideo.currentTime = 0;
+            reactionVideo.play();
+            // Play the idle video after the length of the video
+            setTimeout(() => {
+              reactionVideo.classList.add("hide");
+              document.querySelector("#bunny-idle").classList.remove("hide");
+              document.querySelector("#bunny-idle").play();
+            }, reactionVideo.duration * 1000);
+
+            // Once the video has finished playing, play the idle video again
+            // document.querySelector('video').addEventListener('ended', () => {
+            //   document.querySelector('video').src = 'videos/bunny-idle.mp4';
+            // });
+          });
+      }
+    </script>
+  </body>
 </html>

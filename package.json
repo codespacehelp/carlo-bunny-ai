@@ -1,0 +1,23 @@
+{
+  "name": "bunny-ai",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codespacehelp/carlo-bunny-ai.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codespacehelp/carlo-bunny-ai/issues"
+  },
+  "homepage": "https://github.com/codespacehelp/carlo-bunny-ai#readme",
+  "description": "",
+  "dependencies": {
+    "openai": "^4.80.0"
+  }
+}
