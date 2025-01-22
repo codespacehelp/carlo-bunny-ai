@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    main {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    video {
+      height: 60vh;
+    }
+
+    .microphone:hover {
+      opacity: 0.8;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+  <main>
+    <video src="videos/bunny-idle.mp4" muted autoplay loop></video>
+    <img class="microphone" src="microphone.svg" alt="">    
+
+
+
+  </main>
+
+  <script>
+
+    const microphone = document.querySelector('.microphone');
+    microphone.addEventListener('click', () => {
+      const recognition = new webkitSpeechRecognition();
+      recognition.lang = 'en-US';
+      recognition.start();
+      recognition.onresult = (event) => {
+        const speechToText = event.results[0][0].transcript;
+        console.log(speechToText);
+      }
+    });
+  </script>
+  
+</body>
+</html>

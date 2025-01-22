@@ -1,0 +1,20 @@
+{
+	"geolocation": {
+		"data": {
+			"city": "Hasselt",
+			"country": {
+				"code": "BE",
+				"name": "Belgium"
+			},
+			"subdivision": {
+				"code": "VLG",
+				"name": "Flanders"
+			},
+			"timezone": "Europe/Brussels",
+			"latitude": 50.935,
+			"longitude": 5.3372,
+			"postalCode": "3500"
+		},
+		"timestamp": 1737559651210
+	}
+}
