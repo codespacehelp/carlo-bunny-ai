@@ -22,7 +22,7 @@ export default async (req, context) => {
 
             { "reaction": "curious", "text": "Wow, a gift? Now I want to know!" }
 
-            The following reactions are possible: "curious", "happy", "no", "idontknow", "dance", "sad", "hello", "bored". React to the message the user has sent with the appropriate reaction.
+            The following reactions are possible: "curious", "happy", "no", "idontknow", "dance", "sad", "hello", "bored", "yes". React to the message the user has sent with the appropriate reaction.
             `,
       },
       {
