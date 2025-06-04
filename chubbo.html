@@ -143,8 +143,14 @@
                 document.querySelector(".speech").textContent = responseText;
 
                 const speech = new SpeechSynthesisUtterance(responseText);
-                speech.lang = "en-US";
-                speechSynthesis.speak(speech);
+
+if (/[àèéìòù]/i.test(responseText) || responseText.includes("ciao")) {
+    speech.lang = "it-IT"; // Se contiene parole italiane
+} else {
+    speech.lang = "en-US"; 
+}
+
+speechSynthesis.speak(speech);
 
                 if (VALID_REACTIONS.includes(reaction)) {
                     Array.from(document.querySelectorAll("video")).forEach((video) => {
