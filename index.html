@@ -12,17 +12,15 @@
                 box-sizing: border-box;
             }
 
-           body,
+            body,
             html {
                 width: 100%;
                 height: 100%;
                 overflow: hidden;
                 position: relative;
                 font-family: Helvetica, sans-serif;
-                margin: 0;
-                padding: 0;
             }
-            
+
             video {
                 position: fixed;
                 top: 0;
@@ -32,7 +30,7 @@
                 object-fit: cover;
                 z-index: 0;
             }
-            
+
             .overlay {
                 position: absolute;
                 top: 0;
@@ -42,36 +40,34 @@
                 z-index: 1;
                 pointer-events: none;
             }
-            
-        
+
             .microphone {
                 position: absolute;
-                top: 30px; 
+                top: 30px;
                 left: 50%;
                 transform: translateX(-50%);
-                width: 30px; 
+                width: 30px;
                 pointer-events: auto;
             }
-            
+
             .microphone:hover {
                 opacity: 0.8;
                 cursor: pointer;
             }
-            
-        
+
             .speech {
                 position: absolute;
                 bottom: 30px;
                 width: 100%;
-                text-align: left; 
-                padding-left: 50px; 
-                padding-right: 50px; 
-                font-size: 0.8rem; 
+                text-align: left;
+                padding-left: 50px;
+                padding-right: 50px;
+                font-size: 0.8rem;
                 color: white;
                 text-shadow: 1px 1px 3px black;
                 pointer-events: none;
             }
-            
+
             .hide {
                 display: none;
             }
@@ -103,21 +99,9 @@
 
         <script>
             const VALID_REACTIONS = [
-                "angry",
-                "crazy",
-                "crazy2",
-                "cute",
-                "frustrated",
-                "happy",
-                "idle",
-                "playful",
-                "sad",
-                "scared",
-                "superhappy",
-                "surprised",
-                "unbelieving",
-                "unimpressed",
-                "worried",
+                "angry", "crazy", "crazy2", "cute", "frustrated",
+                "happy", "idle", "playful", "sad", "scared",
+                "superhappy", "surprised", "unbelieving", "unimpressed", "worried"
             ];
 
             const client = mqtt.connect("wss://algorithmicgaze:n07H23Py1uIpjny6@algorithmicgaze.cloud.shiftr.io");
@@ -165,13 +149,12 @@
                         const reaction = data.reaction;
                         const responseText = data.text;
 
-                        client.publish(
-                            "carlo-bunny",
-                            JSON.stringify({ type: "reaction", reaction, text: responseText }),
-                        );
+                        client.publish("carlo-bunny", JSON.stringify({ type: "reaction", reaction, text: responseText }));
 
                         console.log({ reaction, responseText });
-                        document.querySelector(".speech").textContent = responseText;
+
+                        // Andata a capo a ogni frase
+                        document.querySelector(".speech").innerHTML = splitIntoSentences(responseText).join("<br>");
 
                         const speech = new SpeechSynthesisUtterance(responseText);
                         speech.lang = "en-US";
@@ -196,6 +179,10 @@
                             }, reactionVideo.duration * 1000);
                         }
                     });
+            }
+
+            function splitIntoSentences(text) {
+                return text.match(/[^.!?]+[.!?]+(?:\s|$)/g) || [text];
             }
         </script>
     </body>
