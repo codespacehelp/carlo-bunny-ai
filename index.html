@@ -115,6 +115,7 @@
                     .then((data) => {
                         const reaction = data.reaction;
                         const responseText = data.text;
+                        console.log({ reaction, responseText });
                         document.querySelector(".speech").textContent = responseText;
 
                         const speech = new SpeechSynthesisUtterance(responseText);
@@ -125,14 +126,15 @@
                             video.classList.add("hide");
                         });
 
-                        const reactionVideo = document.querySelector(`#bunny-${reaction}`);
+                        const reactionVideo = document.querySelector(`#chubbo-${reaction}`);
+                        console.log(reactionVideo);
                         reactionVideo.classList.remove("hide");
                         reactionVideo.currentTime = 0;
                         reactionVideo.play();
 
                         setTimeout(() => {
                             reactionVideo.classList.add("hide");
-                            const idle = document.querySelector("#chubbo-blink");
+                            const idle = document.querySelector("#chubbo-idle");
                             idle.classList.remove("hide");
                             idle.play();
                         }, reactionVideo.duration * 1000);
