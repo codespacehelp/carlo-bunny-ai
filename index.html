@@ -41,17 +41,19 @@
                 pointer-events: none;
             }
 
-            .microphone {
+                 .microphone {
                 position: absolute;
                 top: 30px;
                 left: 50%;
                 transform: translateX(-50%);
                 width: 30px;
                 pointer-events: auto;
+                filter: brightness(0) invert(1); /* bianco */
+                transition: filter 0.3s ease;
             }
-
+        
             .microphone:hover {
-                opacity: 0.8;
+                filter: brightness(0) saturate(100%) sepia(0%) hue-rotate(180deg) brightness(1.2) saturate(2) drop-shadow(0 0 2px #aee4ff); /* celestino */
                 cursor: pointer;
             }
 
