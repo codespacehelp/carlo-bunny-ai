@@ -12,60 +12,67 @@
                 box-sizing: border-box;
             }
 
-            body,
-            html {
-                width: 100%;
-                height: 100%;
-                overflow: hidden;
-                position: relative;
-                font-family: sans-serif;
-            }
+           body,
+html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    font-family: Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
 
-            video {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100vw;
-                height: 100vh;
-                object-fit: cover;
-                z-index: 0;
-            }
+video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: 0;
+}
 
-            .overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                z-index: 1;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                gap: 2rem;
-                pointer-events: none;
-            }
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
 
-            .microphone {
-                width: 40px;
-                pointer-events: auto;
-            }
+/* Microfono in alto al centro */
+.microphone {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    pointer-events: auto;
+}
 
-            .microphone:hover {
-                opacity: 0.8;
-                cursor: pointer;
-            }
+.microphone:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
 
-            .speech {
-                font-size: 2rem;
-                color: white;
-                text-shadow: 2px 2px 6px white;
-                pointer-events: none;
-            }
+/* Testo in basso */
+.speech {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+    color: white;
+    text-shadow: 1px 1px 3px black;
+    pointer-events: none;
+}
 
-            .hide {
-                display: none;
-            }
+.hide {
+    display: none;
+}
         </style>
     </head>
     <body>
