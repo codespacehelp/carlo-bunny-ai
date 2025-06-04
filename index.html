@@ -19,6 +19,7 @@
                 overflow: hidden;
                 position: relative;
                 font-family: Helvetica, sans-serif;
+                cursor: none; 
             }
 
             video {
@@ -41,10 +42,10 @@
                 pointer-events: none;
             }
 
-                .microphone {
+            .microphone {
                 position: absolute;
                 top: 30px;
-                left: 30px; /* padding di 50px dalla sinistra */
+                left: 30px;
                 width: 30px;
                 pointer-events: auto;
             }
@@ -53,6 +54,7 @@
                 opacity: 0.8;
                 cursor: pointer;
             }
+
             .speech {
                 position: absolute;
                 bottom: 30px;
@@ -151,7 +153,6 @@
 
                         console.log({ reaction, responseText });
 
-                        // Andata a capo a ogni frase
                         document.querySelector(".speech").innerHTML = splitIntoSentences(responseText).join("<br>");
 
                         const speech = new SpeechSynthesisUtterance(responseText);
@@ -182,6 +183,11 @@
             function splitIntoSentences(text) {
                 return text.match(/[^.!?]+[.!?]+(?:\s|$)/g) || [text];
             }
+
+            // 🔊 Prova ad attivare il microfono automaticamente al caricamento
+            window.addEventListener("load", () => {
+                listenToMicrophone(); // ATTENZIONE: potrebbe essere bloccato dal browser
+            });
         </script>
     </body>
 </html>
