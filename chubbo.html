@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-it">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -143,8 +143,16 @@
                 document.querySelector(".speech").textContent = responseText;
 
                 const speech = new SpeechSynthesisUtterance(responseText);
-                speech.lang = "en-US";
-                speechSynthesis.speak(speech);
+
+// Riconoscimento automatico della lingua
+if (/[\u00C0-\u017F]|che|non|per|con|sono|una|questo|ciao|amico/i.test(responseText)) {
+    speech.lang = "it-IT";
+} else {
+    speech.lang = "en-US";
+}
+
+speechSynthesis.speak(speech);
+
 
                 if (VALID_REACTIONS.includes(reaction)) {
                     Array.from(document.querySelectorAll("video")).forEach((video) => {
