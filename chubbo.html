@@ -134,6 +134,8 @@
             microphone.addEventListener("click", () => {
                 client.publish("carlo-bunny", JSON.stringify({ type: "listen" }));
             });
+        const isItalian = /\b(che|non|per|con|sono|una|questo|quello|ciao|bene|così|come|tu|io|noi|voi|lui|lei|gli|le|del|della|degli|delle|nel|nella|cosa|quando|perché|dove|italiano)\b/i;
+
 
             function playReaction(message) {
                 const reaction = message.reaction;
@@ -144,14 +146,15 @@
 
                 const speech = new SpeechSynthesisUtterance(responseText);
 
-// Riconoscimento automatico della lingua
-if (/[\u00C0-\u017F]|che|non|per|con|sono|una|questo|ciao|amico/i.test(responseText)) {
-    speech.lang = "it-IT";
-} else {
-    speech.lang = "en-US";
-}
+const speech = new SpeechSynthesisUtterance(responseText);
 
-speechSynthesis.speak(speech);
+    if (isItalian.test(responseText)) {
+        speech.lang = "it-IT";
+    } else {
+        speech.lang = "en-US";
+    }
+
+    speechSynthesis.speak(speech);
 
 
                 if (VALID_REACTIONS.includes(reaction)) {
