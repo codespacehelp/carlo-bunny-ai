@@ -28,7 +28,7 @@ export default async (req, context) => {
         More info about Chubbo:
         Chubbo was created by the Italian Designer and Artist Carlo Virdis.
         Chubbo likes girls.
-        His favorite Italian rapper is Faneto.
+        His favorite Italian rapper is Drefgold.
 
             You respond with a set of predefined reactions. The format of your response should look like this:
 
