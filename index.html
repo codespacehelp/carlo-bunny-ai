@@ -43,13 +43,13 @@ video {
     pointer-events: none;
 }
 
-/* Microfono in alto al centro */
+/* Microfono fissato in alto al centro */
 .microphone {
     position: absolute;
-    top: 20px;
+    top: 10px; /* vicino al bordo superiore */
     left: 50%;
     transform: translateX(-50%);
-    width: 40px;
+    width: 30px; /* eventualmente più piccolo */
     pointer-events: auto;
 }
 
@@ -58,13 +58,13 @@ video {
     cursor: pointer;
 }
 
-/* Testo in basso */
+/* Testo in basso e più piccolo */
 .speech {
     position: absolute;
-    bottom: 20px;
+    bottom: 10px;
     width: 100%;
     text-align: center;
-    font-size: 1rem;
+    font-size: 0.8rem; /* font molto più piccolo */
     color: white;
     text-shadow: 1px 1px 3px black;
     pointer-events: none;
