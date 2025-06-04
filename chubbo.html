@@ -97,62 +97,48 @@
 
             client.on("connect", () => {
                 console.log("connected");
-                client.publish("carlo-bunny", JSON.stringify({ type: "connect", device: "mac" }));
+                client.publish("carlo-bunny", JSON.stringify({ type: "connect", device: "chubbo" }));
+                client.subscribe("carlo-bunny", (err) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                });
             });
 
-            const microphone = document.querySelector(".microphone");
-            microphone.addEventListener("click", () => {
-                document.querySelector(".speech").textContent = "";
-                const recognition = new webkitSpeechRecognition();
-                recognition.lang = "en-US";
-                recognition.start();
-                recognition.onresult = (event) => {
-                    const speechToText = event.results[0][0].transcript;
-                    console.log(speechToText);
-                    document.querySelector(".speech").textContent = speechToText;
-                    chatToBunny(speechToText);
-                };
+            client.on("message", (topic, message) => {
+                const parsedMessage = JSON.parse(message);
+                if (parsedMessage.type === "reaction") {
+                    playReaction(parsedMessage);
+                }
             });
 
-            function chatToBunny(text) {
-                fetch("/.netlify/functions/chat", {
-                    method: "POST",
-                    body: JSON.stringify({ text }),
-                })
-                    .then((res) => res.json())
-                    .then((data) => {
-                        const reaction = data.reaction;
-                        const responseText = data.text;
+            function playReaction(message) {
+                const reaction = message.reaction;
+                const responseText = message.text;
 
-                        client.publish(
-                            "carlo-bunny",
-                            JSON.stringify({ type: "reaction", reaction, text: responseText }),
-                        );
+                console.log({ reaction, responseText });
+                document.querySelector(".speech").textContent = responseText;
 
-                        console.log({ reaction, responseText });
-                        document.querySelector(".speech").textContent = responseText;
+                const speech = new SpeechSynthesisUtterance(responseText);
+                speech.lang = "en-US";
+                speechSynthesis.speak(speech);
 
-                        const speech = new SpeechSynthesisUtterance(responseText);
-                        speech.lang = "en-US";
-                        speechSynthesis.speak(speech);
+                Array.from(document.querySelectorAll("video")).forEach((video) => {
+                    video.classList.add("hide");
+                });
 
-                        Array.from(document.querySelectorAll("video")).forEach((video) => {
-                            video.classList.add("hide");
-                        });
+                const reactionVideo = document.querySelector(`#chubbo-${reaction}`);
+                console.log(reactionVideo);
+                reactionVideo.classList.remove("hide");
+                reactionVideo.currentTime = 0;
+                reactionVideo.play();
 
-                        const reactionVideo = document.querySelector(`#chubbo-${reaction}`);
-                        console.log(reactionVideo);
-                        reactionVideo.classList.remove("hide");
-                        reactionVideo.currentTime = 0;
-                        reactionVideo.play();
-
-                        setTimeout(() => {
-                            reactionVideo.classList.add("hide");
-                            const idle = document.querySelector("#chubbo-idle");
-                            idle.classList.remove("hide");
-                            idle.play();
-                        }, reactionVideo.duration * 1000);
-                    });
+                setTimeout(() => {
+                    reactionVideo.classList.add("hide");
+                    const idle = document.querySelector("#chubbo-idle");
+                    idle.classList.remove("hide");
+                    idle.play();
+                }, reactionVideo.duration * 1000);
             }
         </script>
     </body>
