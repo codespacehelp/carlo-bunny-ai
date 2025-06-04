@@ -98,10 +98,24 @@
             client.on("connect", () => {
                 console.log("connected");
                 client.publish("carlo-bunny", JSON.stringify({ type: "connect", device: "mac" }));
+                client.subscribe("carlo-bunny", (err) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                });
+            });
+
+            client.on("message", (topic, message) => {
+                const parsedMessage = JSON.parse(message);
+                if (parsedMessage.type === "listen") {
+                    listenToMicrophone();
+                }
             });
 
             const microphone = document.querySelector(".microphone");
-            microphone.addEventListener("click", () => {
+            microphone.addEventListener("click", listenToMicrophone);
+
+            function listenToMicrophone() {
                 document.querySelector(".speech").textContent = "";
                 const recognition = new webkitSpeechRecognition();
                 recognition.lang = "en-US";
@@ -112,7 +126,7 @@
                     document.querySelector(".speech").textContent = speechToText;
                     chatToBunny(speechToText);
                 };
-            });
+            }
 
             function chatToBunny(text) {
                 fetch("/.netlify/functions/chat", {

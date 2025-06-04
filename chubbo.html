@@ -112,6 +112,11 @@
                 }
             });
 
+            const microphone = document.querySelector(".microphone");
+            microphone.addEventListener("click", () => {
+                client.publish("carlo-bunny", JSON.stringify({ type: "listen" }));
+            });
+
             function playReaction(message) {
                 const reaction = message.reaction;
                 const responseText = message.text;
