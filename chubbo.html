@@ -93,6 +93,24 @@
         </div>
 
         <script>
+            const VALID_REACTIONS = [
+                "angry",
+                "crazy",
+                "crazy2",
+                "cute",
+                "frustrated",
+                "happy",
+                "idle",
+                "playful",
+                "sad",
+                "scared",
+                "superhappy",
+                "surprised",
+                "unbelieving",
+                "unimpressed",
+                "worried",
+            ];
+
             const client = mqtt.connect("wss://algorithmicgaze:n07H23Py1uIpjny6@algorithmicgaze.cloud.shiftr.io");
 
             client.on("connect", () => {
@@ -128,22 +146,24 @@
                 speech.lang = "en-US";
                 speechSynthesis.speak(speech);
 
-                Array.from(document.querySelectorAll("video")).forEach((video) => {
-                    video.classList.add("hide");
-                });
+                if (VALID_REACTIONS.includes(reaction)) {
+                    Array.from(document.querySelectorAll("video")).forEach((video) => {
+                        video.classList.add("hide");
+                    });
 
-                const reactionVideo = document.querySelector(`#chubbo-${reaction}`);
-                console.log(reactionVideo);
-                reactionVideo.classList.remove("hide");
-                reactionVideo.currentTime = 0;
-                reactionVideo.play();
+                    const reactionVideo = document.querySelector(`#chubbo-${reaction}`);
+                    console.log(reactionVideo);
+                    reactionVideo.classList.remove("hide");
+                    reactionVideo.currentTime = 0;
+                    reactionVideo.play();
 
-                setTimeout(() => {
-                    reactionVideo.classList.add("hide");
-                    const idle = document.querySelector("#chubbo-idle");
-                    idle.classList.remove("hide");
-                    idle.play();
-                }, reactionVideo.duration * 1000);
+                    setTimeout(() => {
+                        reactionVideo.classList.add("hide");
+                        const idle = document.querySelector("#chubbo-idle");
+                        idle.classList.remove("hide");
+                        idle.play();
+                    }, reactionVideo.duration * 1000);
+                }
             }
         </script>
     </body>
