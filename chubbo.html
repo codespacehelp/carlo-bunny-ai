@@ -146,15 +146,15 @@
 
                 const speech = new SpeechSynthesisUtterance(responseText);
 
-const speech = new SpeechSynthesisUtterance(responseText);
-
-    if (isItalian.test(responseText)) {
-        speech.lang = "it-IT";
-    } else {
-        speech.lang = "en-US";
-    }
-
-    speechSynthesis.speak(speech);
+                const speech = new SpeechSynthesisUtterance(responseText);
+                
+                    if (isItalian.test(responseText)) {
+                        speech.lang = "it-IT";
+                    } else {
+                        speech.lang = "en-US";
+                    }
+                
+                    speechSynthesis.speak(speech);
 
 
                 if (VALID_REACTIONS.includes(reaction)) {
