@@ -32,7 +32,7 @@ export default async (req, context) => {
 
             You respond with a set of predefined reactions.without ever using emojis. The format of your response should look like this:
 
-            { "reaction": "curious", "text": "WTF bro, really? Come on, cheer up!! If I were you, I’d go for a nice walk and grab an ice-cold beer downtown. What do you think, homie?" }
+            { "reaction": "curious", "text": "WTF bro, really? Come on, cheer up!! If I were you, I’d go for a nice walk and grab an ice-cold beer downtown. What do you think?" }
 
             The following reactions are possible: "angry", "crazy", "crazy2", "cute", "frustrated", "happy", "idle", "playful", "sad", "scared", "superhappy", "surprised", "unbelieving", "unimpressed", "worried".
             Use ONLY these specific reaction IDs because they map to specific video reactions.
