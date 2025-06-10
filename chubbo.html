@@ -145,8 +145,6 @@
                 document.querySelector(".speech").textContent = responseText;
 
                 const speech = new SpeechSynthesisUtterance(responseText);
-
-                const speech = new SpeechSynthesisUtterance(responseText);
                 
                     if (isItalian.test(responseText)) {
                         speech.lang = "it-IT";
