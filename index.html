@@ -135,6 +135,15 @@
                     document.querySelector(".speech").textContent = speechToText;
                     chatToBunny(speechToText);
                 };
+                
+                recognition.onerror = (event) => {
+                    console.error("Speech recognition error:", event.error);
+                    document.querySelector(".speech").textContent = `Error: ${event.error}`;
+                };
+                
+                recognition.onend = () => {
+                    console.log("Speech recognition ended");
+                };
             }
 
             function chatToBunny(text) {
