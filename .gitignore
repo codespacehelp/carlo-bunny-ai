@@ -1,10 +1,14 @@
 # Local Netlify folder
 .netlify
+.claude
+.wrangler
+
 # Node stuff
 node_modules/
 
 # Secrets
 .env
+.dev.vars
 
 # Mac cruft
 .DS_Store
